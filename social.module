@@ -1,0 +1,106 @@
+<?php
+
+/**
+ * @file social.module
+ * TODO: Enter file description here.
+ */
+
+/**
+ * Cache time for the channel file.
+ */
+define('SOCIAL_CHANNEL_FILE_EXPIRE', 60 * 60 * 24 * 360);
+
+/**
+ * The facebook locale used. @TODO
+ */
+define('SOCIAL_FACEBOOK_LOCALE', 'en_US');
+
+require_once(__DIR__ . '/social.widgets.inc');
+
+/**
+ * Implements hook_menu().
+ */
+function social_menu() {
+  $items['channel.html'] = array(
+    'page callback' => 'social_channelfile',
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+    'file' => 'social.pages.inc',
+  );
+  return $items;
+}
+
+function social_facebook_defaults() {
+  $settings = &drupal_static(__FUNCTION__);
+  if (!isset($settings)) {
+    $settings = array(
+      'load' => 'onload',
+      'facebook' => array(
+        'options' => array(
+          'channelUrl' => url('channel.html', array('absolute' => TRUE)),
+        ),
+      ),
+    );
+    drupal_alter('social_facebook_defaults', $settings);
+  }
+  return $settings;
+}
+
+/**
+ * Implements hook_page_build().
+ */
+function social_page_build() {
+  if (arg(0) != 'admin') {
+    _social_load_socialitejs();
+    $path = drupal_get_path('module', 'social');
+    drupal_add_js($path . '/js/social.js');
+    drupal_add_js(array('social' => social_facebook_defaults()), 'setting');
+  }
+}
+
+/**
+ * Implements hook_easy_social_widget_alter().
+ */
+function social_easy_social_widget_alter(&$widgets) {
+  foreach (array('twitter', 'googleplus', 'facebook', 'linkedin') as $widget) {
+    if (!empty($widgets[$widget]['scripts'])) {
+      unset($widgets[$widget]['scripts']);
+    }
+    $widgets[$widget]['markup'] = '_social_widget_' . $widget . '_markup';
+  }
+}
+
+function _social_load_socialitejs() {
+  $path = drupal_get_path('module', 'social');
+  $options = array('group' => JS_LIBRARY);
+  drupal_add_js(libraries_get_path('jquery-tiny-pubsub') . '/dist/ba-tiny-pubsub.min.js', array(
+    'group' => JS_LIBRARY,
+    'weight' => -19 // jQuery used -20
+  ));
+  drupal_add_js(libraries_get_path('socialite') . '/socialite.js', $options);
+  drupal_add_js($path . '/js/socialite.throttle.js', $options);
+  drupal_add_js($path . '/js/socialite.facebook.js', $options);
+  drupal_add_css($path . '/css/socialitejs.css', $options);
+}
+
+/**
+ * Implements hook_ckeditor_plugin().
+ */
+function social_ckeditor_plugin() {
+  return array(
+    'social' => array(
+      // Name of the plugin used to write it.
+      'name' => 'social',
+      // Description of the plugin - it would be displayed in the plugins management section of profile settings.
+      'desc' => t('Social media buttons'),
+      // The full path to the CKEditor plugins directory, with the trailing slash.
+      'path' => drupal_get_path('module', 'social') . '/plugins/social/',
+      'buttons' => array(
+        'Social' => array(
+          'icon' => 'icon.gif',
+          'label' => 'Add social media buttons',
+        )
+      )
+    )
+  );
+}

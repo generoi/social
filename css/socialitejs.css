@@ -1,0 +1,55 @@
+.facebook-like,
+.twitter-share,
+.googleplus-one,
+.linkedin-share {
+  background-image: url(social-sprite.png);
+  background-repeat: no-repeat;
+  background-color: transparent;
+  background-position: 0 0;
+  display: block;
+  width: 65px;
+  height: 25px;
+  text-indent: -9999px;
+  white-space: nowrap;
+}
+
+.facebook-like { background-position: -5px -95px; }
+.twitter-share { background-position: -5px -35px; }
+.googleplus-one { background-position: -5px -65px; }
+.linkedin-share { background-position: -5px 5px; }
+
+.socialite-loaded {
+  background-image: none;
+  height: 100%;
+  width: 100%;
+  text-indent:0px;
+}
+
+.socialite-item {
+  height: 30px;
+}
+
+.socialitejs.layout0 {
+  display: block;
+  list-style: none outside none;
+  margin: 10px;
+  padding: 10px;
+}
+
+.socialitejs.layout0 > li {
+  display: block;
+  margin: 0;
+}
+
+.socialitejs.layout1 {
+  display: block;
+  list-style: none outside none;
+  margin: 10px 20px 20px;
+  padding: 0;
+}
+
+.socialitejs.layout1 > li {
+  display: inline-block;
+  margin: 0;
+  padding: 10px;
+}

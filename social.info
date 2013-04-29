@@ -1,0 +1,5 @@
+name = Social
+description = Social buttons and extensions
+dependencies[] = easy_social
+package = custom
+core = 7.x
