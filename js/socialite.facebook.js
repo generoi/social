@@ -20,6 +20,7 @@
       var fb = document.createElement('div'),
           settings = Socialite.settings.facebook;
       fb.id = 'fb-root';
+      if (!document.body) return;
       document.body.appendChild(fb);
       network.script.src = network.script.src.replace('{{language}}', settings.lang);
 
