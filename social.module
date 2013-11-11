@@ -40,6 +40,7 @@ function social_facebook_defaults() {
           'channelUrl' => url('channel.html', array('absolute' => TRUE)),
         ),
       ),
+      'defaultProtocol' => 'https://',
     );
     drupal_alter('social_facebook_defaults', $settings);
   }
