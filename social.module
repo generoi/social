@@ -51,7 +51,7 @@ function social_facebook_defaults() {
  * Implements hook_page_build().
  */
 function social_page_build() {
-  if (!path_is_admin(current_path()) && arg(2) != 'edit' && arg(1) != 'media') {
+  if (!path_is_admin(current_path()) && arg(2) != 'edit' && arg(0) != 'media') {
     _social_load_socialitejs();
     $path = drupal_get_path('module', 'social');
     drupal_add_js($path . '/js/social.js');
