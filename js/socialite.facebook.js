@@ -49,7 +49,7 @@
       // Default to current URL
       if (!el.getAttribute('data-href')) {
         var protocol = Drupal.settings.social && Drupal.settings.social.defaultProtocol || (location.protocol + '//');
-        el.setAttribute('data-href', protocol + location.host + location.path);
+        el.setAttribute('data-href', protocol + location.host + location.pathname);
       }
       instance.el.appendChild(el);
       // If FB hasn't been loaded, wait for the event.
