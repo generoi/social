@@ -5,7 +5,7 @@
       var pathToRoot = this.path + '../../';
       var css = [
           '.facebook-like, .twitter-share, .googleplus-one, .linkedin-share {'
-        , 'background-image: url(' + CKEDITOR.getUrl(pathToRoot + 'css/social-sprite.png') +  ');'
+        , 'background-image: url(' + CKEDITOR.getUrl(pathToRoot + 'css/social-sprite.png') + ');'
         , 'background-repeat: no-repeat; background-color: transparent; background-position: 0 0;'
         , 'display: block; width: 65px; height: 25px; text-indent: -9999px; white-space: nowrap;'
         , '}'

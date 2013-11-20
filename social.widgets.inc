@@ -36,8 +36,7 @@ function _social_widget_facebook_markup($url, $type, $title = NULL, $lang = 'en'
 
   $appid = variable_get_value('easy_social_facebook_appid');
   $facebook_type = variable_get_value('easy_social_facebook_widget_type');
-  $send_button = variable_get_value('easy_social_facebook_send_button') ? 'true'
-      : 'false';
+  $send_button = variable_get_value('easy_social_facebook_send_button') ? 'true' : 'false';
   $show_faces = variable_get_value('easy_social_facebook_show_faces') ? 'true' : 'false';
   $action = variable_get_value('easy_social_facebook_verb');
   $color_scheme = variable_get_value('easy_social_facebook_color_scheme');
@@ -64,7 +63,8 @@ function _social_widget_facebook_markup($url, $type, $title = NULL, $lang = 'en'
 
     $path = 'http://www.facebook.com/sharer.php';
     $markup = _social_socialitejs_widget_markup('facebook', 'like', $path, $data, $options);
-  } else {
+  }
+  else {
     $url = drupal_encode_path($url);
     $font = drupal_encode_path($font);
 
@@ -130,7 +130,7 @@ function _social_widget_linkedin_markup($url, $type, $title = NULL, $lang = 'und
   $options = array(
     'query' => array(
       'url' => drupal_encode_path($url),
-      'mini' => 'true'
+      'mini' => 'true',
     ),
   );
   $path = 'http://www.linkedin.com/shareArticle';
