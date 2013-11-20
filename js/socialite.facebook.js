@@ -43,14 +43,21 @@
 
   Socialite.widget('facebook', 'like', {
     init: function(instance) {
-      var el = document.createElement('div');
+      var el = document.createElement('div')
+        , protocol;
       el.className = 'fb-like';
       Socialite.copyDataAttributes(instance.el, el);
       // Default to current URL
       if (!el.getAttribute('data-href')) {
-        var protocol = Drupal.settings.social && Drupal.settings.social.defaultProtocol || (location.protocol + '//');
+        protocol = Drupal.settings.social && Drupal.settings.social.defaultProtocol || (location.protocol + '//');
         el.setAttribute('data-href', protocol + location.host + location.pathname);
       }
+      // If forced protocol is used.
+      if (protocol = Drupal.settings.social && Drupal.settings.social.forceProtocol) {
+        var href = el.getAttribute('data-href').replace(/^https?:\/\//, protocol);
+        el.setAttribute('href', href);
+      }
+
       instance.el.appendChild(el);
       // If FB hasn't been loaded, wait for the event.
       if (!(window.FB && window.FB.XFBML)) {
