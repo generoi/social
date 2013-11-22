@@ -18,7 +18,9 @@
     },
     append: function(network) {
       var fb = document.createElement('div'),
-          settings = Socialite.settings.facebook;
+          settings = Socialite.settings.facebook,
+          events = { onlike: 'edge.create', onunlike: 'edge.remove', onsend: 'message.send' },
+          options;
       fb.id = 'fb-root';
       if (!document.body) return;
       document.body.appendChild(fb);
@@ -37,6 +39,11 @@
         // We have to initalize otherwise buttons aren't parsed.
         window.FB.init(options);
         $.publish('fb.init', options);
+        for (var e in events) if (events.hasOwnProperty(e)) {
+          if (typeof settings[e] === 'function') {
+            window.FB.Event.subscribe(events[e], settings[e]);
+          }
+        }
       };
     }
   });

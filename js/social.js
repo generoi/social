@@ -1,4 +1,16 @@
 (function($) {
+  Socialite.setup({
+    facebook: {
+      onlike: function (url) { Drupal.social.ga('facebook', 'like', url); },
+      onunlike: function (url) { Drupal.social.ga('facebook', 'unlike', url); },
+      onsend: function (url) { Drupal.social.ga('facebook', 'send', url); }
+    },
+    twitter: {
+      ontweet: function (e) { Drupal.social.ga('twitter', 'tweet', ''); },
+      onclick: function (e) { Drupal.social.ga('twitter', 'click', e.region); }
+    }
+  });
+
   Drupal.behaviors.social = {
     attach: function(context) {
       var settings = Drupal.settings.social;
@@ -30,4 +42,9 @@
   };
 
   Drupal.social = Drupal.social || {};
+
+  Drupal.social.ga = function() {
+    window._gaq && window._gaq.push(['_trackSocial'].concat(arguments));
+    console && console.log && console.log('trackSocial', arguments);
+  }
 }(jQuery));
