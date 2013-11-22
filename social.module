@@ -32,12 +32,24 @@ function social_menu() {
 
 function social_facebook_defaults() {
   $settings = &drupal_static(__FUNCTION__);
+  $langcode = i18n_langcode();
+  $iso_langcode = array(
+    'en' => 'en_GB',
+    'sv' => 'sv_SE',
+    'fi' => 'fi_FI'
+  );
   if (!isset($settings)) {
     $settings = array(
       'load' => 'onload',
       'facebook' => array(
         'options' => array(
           'channelUrl' => url('channel.html', array('absolute' => TRUE)),
+          'lang' => isset($iso_langcode[$langcode]) ? $iso_langcode[$langcode] : 'en_GB',
+        ),
+      ),
+      'twitter' => array(
+        'options' => array(
+          'lang' => $langcode,
         ),
       ),
       'defaultProtocol' => 'http://',

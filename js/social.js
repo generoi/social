@@ -13,11 +13,21 @@
 
   Drupal.behaviors.social = {
     attach: function(context) {
-      var settings = Drupal.settings.social;
-      // Extend the facebook init settings with options provided by social.
+      var settings = Drupal.settings.social,
+          networks = ['facebook', 'twitter'];
+
+      // Extend the network init settings with options provided by social.
       // As socialite uses lazy loading (until a tag is parsed) this is possible here.
-      if (settings.facebook && settings.facebook.options) {
-        $.extend(Socialite.settings.facebook, settings.facebook.options);
+      for (var i = 0, l = networks.length; i < l; i++) {
+        var network = networks[i];
+        if (settings[network] && settings[network].options) {
+          $.extend(Socialite.settings[network], settings[network].options);
+        }
+      }
+
+      // Load facebook network even on pages without widgets.
+      if (window.Socialite && !window.Socialite.networkReady('facebook')) {
+        Socialite.appendNetwork(Socialite.networks.facebook);
       }
 
       switch (settings.load) {
