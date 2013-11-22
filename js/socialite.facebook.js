@@ -48,22 +48,30 @@
     }
   });
 
+
   Socialite.widget('facebook', 'like', {
     init: function(instance) {
       var el = document.createElement('div')
-        , protocol;
+        , protocol, attributes = {};
+
       el.className = 'fb-like';
       Socialite.copyDataAttributes(instance.el, el);
+      attributes.href = el.getAttribute('data-href');
+
       // Default to current URL
-      if (!el.getAttribute('data-href')) {
+      if (!attributes.href) {
         protocol = Drupal.settings.social && Drupal.settings.social.defaultProtocol || (location.protocol + '//');
-        el.setAttribute('data-href', protocol + location.host + location.pathname);
+        attributes.href = protocol + location.host + location.pathname;
       }
+
       // If forced protocol is used.
       if (protocol = Drupal.settings.social && Drupal.settings.social.forceProtocol) {
-        var href = el.getAttribute('data-href').replace(/^https?:\/\//, protocol);
-        el.setAttribute('href', href);
+        attributes.href = attributes.href.replace(/^https?:\/\//, protocol);
       }
+
+      // Currently only supports altertering the href.
+      $.publish('socialite.alterAttributes', [attributes]);
+      el.setAttribute('data-href', attributes.href);
 
       instance.el.appendChild(el);
       // If FB hasn't been loaded, wait for the event.
