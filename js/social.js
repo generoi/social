@@ -54,7 +54,8 @@
   Drupal.social = Drupal.social || {};
 
   Drupal.social.ga = function() {
-    window._gaq && window._gaq.push(['_trackSocial'].concat(arguments));
-    console && console.log && console.log('trackSocial', arguments);
+    var args = Array.prototype.slice.call(arguments);
+    window._gaq && window._gaq.push(['_trackSocial'].concat(args));
+    console && console.log && console.log('trackSocial', args);
   }
 }(jQuery));
