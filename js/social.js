@@ -1,3 +1,4 @@
+/* global Socialite:true */
 (function($) {
   Socialite.setup({
     facebook: {
@@ -41,8 +42,9 @@
           });
           break;
         case 'scroll':
-          // @TODO
+          /* falls through */
         case 'onload':
+          /* falls through */
         default:
           // Begin a throttled load of all widgets.
           Socialite.throttle(context instanceof jQuery ? context[0] : context);
@@ -55,7 +57,7 @@
 
   Drupal.social.ga = function() {
     var args = Array.prototype.slice.call(arguments);
-    window._gaq && window._gaq.push(['_trackSocial'].concat(args));
-    console && console.log && console.log('trackSocial', args);
-  }
+    if (window._gaq) window._gaq.push(['_trackSocial'].concat(args));
+    if (console && console.log) console.log('trackSocial', args);
+  };
 }(jQuery));

@@ -27,10 +27,10 @@
           this.setValue(element.getAttribute('data-' + id));
         },
         commit: function(data) {
-          if (!data[type]) data[type] = {}
+          if (!data[type]) data[type] = {};
           data[type][id] = this.getValue();
         }
-      }
+      };
     }
 
     function displayOptions(type) {
