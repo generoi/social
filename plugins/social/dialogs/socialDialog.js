@@ -61,7 +61,7 @@
               ['Facebook Like', 'facebook-like'],
               ['Twitter Share', 'twitter-share'],
               // @TODO twitter-follow, twitter-mention, twitter-hashtag, twitter-embed
-              ['Google +1', 'googleplus-one'],
+              ['Google +1', 'googleplus-one']
               // @TODO google-plus-share, googleplus-badge
               // @TODO linkedin-recommend linkedin-shared
             ],
@@ -102,7 +102,7 @@
               createTextField('twitter-share', 'type', 'Count type (eg. none)'),
               createTextField('twitter-share', 'via', 'Via account'),
               createTextField('twitter-share', 'related', 'Related'),
-              createTextField('twitter-share', 'text', 'Text'),
+              createTextField('twitter-share', 'text', 'Text')
             ],
             setup: displayOptions('twitter-share')
           }]

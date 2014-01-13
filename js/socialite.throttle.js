@@ -5,7 +5,7 @@
       simultaneousRenders: 3,
       renderInterval: 100,
       maxRenderWaitFailsafe: 5000,
-      callbackDelay: 250,
+      callbackDelay: 250
     };
 
     var widgets = [], activeRenders = 0;
