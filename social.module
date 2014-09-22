@@ -52,8 +52,8 @@ function social_facebook_defaults() {
           'lang' => $langcode,
         ),
       ),
-      'defaultProtocol' => 'http://',
-      'forceProtocol' => 'http://',
+      'defaultProtocol' => 'https://',
+      'forceProtocol' => 'https://',
     );
     drupal_alter('social_facebook_defaults', $settings);
   }
