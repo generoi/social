@@ -42,6 +42,8 @@
     }, settings.renderInterval);
 
     return function (context, top) {
+      // Exit if this is not a valid context. eg. #cbox is not.
+      if (!context.getElementsByClassName) return;
       var elements = Socialite.getElements(context, 'socialite');
       if (top) widgets = elements.concat(widgets);
       else widgets = widgets.concat(elements);
