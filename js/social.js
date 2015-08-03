@@ -47,7 +47,9 @@
           /* falls through */
         default:
           // Begin a throttled load of all widgets.
-          Socialite.throttle(context instanceof jQuery ? context[0] : context);
+          $.subscribe('fb.init', function() {
+            Socialite.throttle(context instanceof jQuery ? context[0] : context);
+          });
           break;
       }
     }
