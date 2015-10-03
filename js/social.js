@@ -1,21 +1,15 @@
 /* global Socialite:true */
 (function($) {
-  Socialite.setup({
-    facebook: {
-      onlike: function (url) { Drupal.social.ga('facebook', 'like', url); },
-      onunlike: function (url) { Drupal.social.ga('facebook', 'unlike', url); },
-      onsend: function (url) { Drupal.social.ga('facebook', 'send', url); }
-    },
-    twitter: {
-      ontweet: function (e) { Drupal.social.ga('twitter', 'tweet', ''); },
-      onclick: function (e) { Drupal.social.ga('twitter', 'click', e.region); }
-    }
-  });
 
   Drupal.behaviors.social = {
     attach: function(context) {
-      var settings = Drupal.settings.social,
-          networks = ['facebook', 'twitter'];
+      if (!this.processed) {
+        Drupal.social.setup();
+        this.processed = true;
+      }
+      var settings = Drupal.settings.social;
+      var networks = ['facebook', 'twitter'];
+      var that = this;
 
       // Extend the network init settings with options provided by social.
       // As socialite uses lazy loading (until a tag is parsed) this is possible here.
@@ -47,8 +41,12 @@
           /* falls through */
         default:
           // Begin a throttled load of all widgets.
-          $.subscribe('fb.init', function() {
-            Socialite.throttle(context instanceof jQuery ? context[0] : context);
+          if (this.fbInit) {
+            Drupal.social.loadWidgets(context);
+          }
+          $.subscribe('fb.init', function () {
+            that.fbInit = true;
+            Drupal.social.loadWidgets(context);
           });
           break;
       }
@@ -56,6 +54,24 @@
   };
 
   Drupal.social = Drupal.social || {};
+
+  Drupal.social.loadWidgets = function (context) {
+    Socialite.throttle(context instanceof jQuery ? context[0] : context);
+  };
+
+  Drupal.social.setup = function () {
+    Socialite.setup({
+      facebook: {
+        onlike: function (url) { Drupal.social.ga('facebook', 'like', url); },
+        onunlike: function (url) { Drupal.social.ga('facebook', 'unlike', url); },
+        onsend: function (url) { Drupal.social.ga('facebook', 'send', url); }
+      },
+      twitter: {
+        ontweet: function (e) { Drupal.social.ga('twitter', 'tweet', ''); },
+        onclick: function (e) { Drupal.social.ga('twitter', 'click', e.region); }
+      }
+    });
+  };
 
   Drupal.social.ga = function() {
     var args = Array.prototype.slice.call(arguments);
